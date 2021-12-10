@@ -1,5 +1,9 @@
 #include "libtcod.hpp"
 
+
+#ifndef ROGUELIKE_ACTOR
+#define ROGUELIKE_ACTOR
+
 class Actor
 {
   public:
@@ -11,3 +15,5 @@ class Actor
     void render() const;
 };
 
+
+#endif ROGUELIKE_ACTOR

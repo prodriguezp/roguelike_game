@@ -1,12 +1,15 @@
 #include "libtcod.hpp"
 
-struct Tile {
 
+#ifndef ROGUELIKE_MAP
+#define ROGUELIKE_MAP
+
+struct Tile{
   bool canWalk; // can we walk through this tile?
-  Tile() : canWalk(true) {}
+  Tile() : canWalk(false) {}
 };
 
-class Map {
+class Map{
 public :
    int width,height;
 
@@ -14,8 +17,13 @@ public :
    ~Map();
    bool isWall(int x, int y) const;
    void render() const;
+   void setWall(int x, int y);
+   void dig(int xInicial, int yInicial, int xFinal , int yFinal);
+
 protected :
    Tile *tiles;
 
-   void setWall(int x, int y);
+
 };
+
+#endif ROGUELIKE_MAP
