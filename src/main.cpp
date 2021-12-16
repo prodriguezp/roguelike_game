@@ -1,11 +1,15 @@
-
+#include "libtcod.hpp"
+#include "Actor.hpp"
+#include "Map.hpp"
 #include "Engine.hpp"
-int main() {
-   Engine engine;
-   while ( !TCODConsole::isWindowClosed() ) {
-      engine.Update();
-      engine.Render();
-   }
-   return 0;
-}
 
+Engine engine;
+
+int main() {
+
+  while ( !TCODConsole::isWindowClosed() ) {
+      engine.update();
+      engine.render();
+  }
+  return  0;
+}

@@ -1,19 +1,16 @@
+
 #include "libtcod.hpp"
 
+#pragma once
 
-#ifndef ROGUELIKE_ACTOR
-#define ROGUELIKE_ACTOR
+class Actor {
+public :
+   int x,y; // position on map
+   int ch; // ascii code
+   TCODColor col; // color
 
-class Actor
-{
-  public:
-    int x,y;
-    int ch;
-    TCODColor col;
-
-    Actor(int x, int y, int ch, const TCODColor &col);
-    void render() const;
+   Actor(int x, int y, int ch, const TCODColor &col);
+   void render( ) const;
 };
 
 
-#endif ROGUELIKE_ACTOR

@@ -3,23 +3,21 @@
 #include "Actor.hpp"
 
 
-
-#ifndef ROGUELIKE_ENGINE
-#define ROGUELIKE_ENGINE
-
+#pragma once
+#define FOVRADIOUS_INICIAL 10
 
 class Engine{
-private:
+public:
   Map* map;
   TCODList<Actor*> actors;
   Actor* player;
-public:
-  Engine(/* args */);
-  ~Engine();
-  void Update();
-  void Render();
-  void createRoom(bool first, int x1, int y1, int x2, int y2);
+  int fovRadius;
+  bool computeFov;
 
+  Engine();
+  ~Engine();
+  void update();
+  void render() ;
 };
-extern
-#endif ROGUELIKE_ENGINE
+
+extern Engine engine;

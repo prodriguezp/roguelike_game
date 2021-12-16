@@ -1,67 +1,67 @@
 #include "Engine.hpp"
-#include "globals/Globals.cpp"
 
-Engine::Engine(/* args */){
-  TCODConsole::initRoot(80,50,"Mi primer Roguelike",false);
-  player = new Actor(0,0,'@',TCODColor::yellow);
-  map = new Map(WIDTH_MAP,HEGHT_MAP);
+Engine::Engine(): computeFov(true), fovRadius(FOVRADIOUS_INICIAL) {
+  TCODConsole::initRoot(ANCHO_MAPA,ALTO_MAPA,"Mi primer Rouguelite",false);
 
-
-  //Añadimos un npm
-  Actor* npc = new Actor(10,15,'X',TCODColor::white);
-
+  //Jugador
+  player = new Actor(25, 25, '@', TCODColor::yellow);
   actors.push(player);
-  actors.push(npc);
 
-  createRoom(true,20,30,40,50);
+
+
+  map = new Map(ANCHO_MAPA, ALTO_MAPA);
+  map->computeFov();
 }
 
-Engine::~Engine(){
-  actors.clearAndDelete();
+Engine::~Engine( ){
   delete map;
-}
-void Engine::Update(){
-   TCOD_key_t key;
-       TCODSystem::checkForEvent(TCOD_EVENT_KEY_PRESS,&key,NULL);
-       switch(key.vk) {
-           case TCODK_UP :
-           if(!map->isWall(player->x,player->y-1)){
-             player->y--;
-           }; break;
-           case TCODK_DOWN :
-           if(!map->isWall(player->x,player->y+1)){
-             player->y++;
-           }; break;
-           case TCODK_LEFT :
-           if(!map->isWall(player->x-1,player->y)){
-             player->x--;
-           }; break;
-           case TCODK_RIGHT:
-           if(!map->isWall(player->x+1,player->y)){
-             player->x++;
-           }; break;
-           default:break;
-       }
-
+  actors.clearAndDelete();
 }
 
-void Engine::Render(){
-  TCODConsole::root->clear();
-       //TCODConsole::root->putChar(player.x,player.y,player.);
 
-       map->render();
-       for (Actor* actor : actors)
-       {
-         actor->render();
-       }
-       player->render();
-
-       TCODConsole::flush();
-}
-void Engine::createRoom(bool first, int x1, int y1, int x2, int y2){
-  map->dig(x1,y1,x2,y2);
-  if(first){
-    player->x = x2/2;
-    player->y = y2/2;
+void Engine::update(){
+  TCOD_key_t key;
+  TCODSystem::checkForEvent(TCOD_EVENT_KEY_PRESS,&key,NULL);
+  switch(key.vk) {
+      case TCODK_UP :
+        if(map->canWalk(player->x, player->y-1)){
+            player->y--;
+            computeFov = true;
+        }
+        break;
+      case TCODK_DOWN :if(map->canWalk(player->x, player->y+1)){
+            player->y++;
+            computeFov = true;
+        }; break;
+      case TCODK_LEFT : if(map->canWalk(player->x-1, player->y)){
+            player->x--;
+            computeFov = true;
+        }; break;
+      case TCODK_RIGHT : if(map->canWalk(player->x+1, player->y)){
+            player->x++;
+            computeFov = true;
+        }; break;
+      default:break;
   }
+}
+
+
+void Engine::render(){
+  TCODConsole::root->clear();
+  //Mapa
+  if(computeFov){
+    computeFov = false;
+    map->computeFov();
+  }
+  map->render();
+  //Actores
+  for(Actor* actorAux : actors){
+    if(map->isInFov(actorAux->x,actorAux->y)){
+      actorAux ->render();
+    }
+
+  }
+  //re-renderizo el jugador:
+  player->render();
+  TCODConsole::flush();
 }
