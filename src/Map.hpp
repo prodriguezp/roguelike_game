@@ -1,11 +1,11 @@
-#include "libtcod.hpp"
+#include "main.hpp"
 
 
 
 #pragma once
 
 #define ANCHO_MAPA 80
-#define ALTO_MAPA 50
+#define ALTO_MAPA 45
 
 struct Tile {
    bool explored; //Está explorado?
@@ -31,6 +31,7 @@ public :
   void computeFov();
   bool canWalk(int x, int y) const;
   void addMonster(int x, int y);
+
 
 protected :
   Tile *tiles;
