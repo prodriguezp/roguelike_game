@@ -19,6 +19,7 @@ public:
   } gameStatus;  // Declaramos una variable
 
 
+  Gui* gui;
   Map* map;
   TCODList<Actor*> actors;
   Actor* player;

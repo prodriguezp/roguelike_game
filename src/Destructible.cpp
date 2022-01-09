@@ -37,6 +37,8 @@ MonsterDestructible::MonsterDestructible(float maxHp, float defense, std::string
 
 void MonsterDestructible::die(Actor *owner) {
    std::cout<<owner->name<<" ha muerto."<<std::endl;
+   engine.gui->message(TCODColor::lightGrey,"Has matado un %s, te curas +2 de vida",owner->name);
+   engine.player->destructible->hp += 2;
    Destructible::die(owner);
 }
 
