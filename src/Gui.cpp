@@ -65,17 +65,14 @@ void Gui::renderBar(int x, int y, int width, const char *name,
   }
 
   Gui::Message::Message(const char *text, const TCODColor &col) :
-   col(col) {
-   this->text = new char[strlen(text)];
-   strcpy(this->text,text);
+    text(strdup(text)),col(col) {
   }
 
   Gui::Message::~Message() {
-    delete [] text;
+    free(text);
   }
 
   void Gui::message(const TCODColor &col, const char *text, ...) {
-   // build the text
    va_list ap;
    char buf[128];
    va_start(ap,text);

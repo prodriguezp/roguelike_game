@@ -20,8 +20,8 @@ Engine::Engine(int screenWidth, int screenHeight): fovRadius(FOVRADIOUS_INICIAL)
 
 Engine::~Engine( ){
   delete map;
-  actors.clearAndDelete();
   delete gui;
+  actors.clearAndDelete();
 }
 
 
