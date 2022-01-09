@@ -64,11 +64,21 @@ void Map::render() const{
   static const TCODColor lightWall(130,110,50);
   static const TCODColor lightGround(200,180,50);
 
+
+  static const TCODColor lightGround2(150,180,50);
+
+
+
   for (int x = 0; x < width; x++){
     for (int y = 0; y < height; y++)
     {
       if ( isInFov(x,y) ) {
-           TCODConsole::root->setCharBackground(x,y, isWall(x,y) ? lightWall :lightGround );
+           if((x%2 == 0) && (y%2 == 0)){
+             TCODConsole::root->setCharBackground(x,y, isWall(x,y) ? lightWall :lightGround );
+           }
+           else{
+             TCODConsole::root->setCharBackground(x,y, isWall(x,y) ? lightWall :lightGround2 );
+           }
        } else if ( isExplored(x,y) ) {
            TCODConsole::root->setCharBackground(x,y, isWall(x,y) ? darkWall : darkGround );
        }
