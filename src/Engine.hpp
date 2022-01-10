@@ -28,6 +28,8 @@ public:
   int screenWidth;
   int screenHeight;
   TCOD_key_t lastKey;
+  TCOD_mouse_t mouse;
+
 
   Engine(int screenWidth, int screenHeight);
   ~Engine();

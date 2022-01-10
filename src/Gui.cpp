@@ -37,6 +37,9 @@ void Gui::render() {
         }
 
 
+  renderMouseLook();
+
+
    // blit the GUI console on the root console
    TCODConsole::blit(con,0,0,engine.screenWidth,PANEL_HEIGHT,
    TCODConsole::root,0,engine.screenHeight-PANEL_HEIGHT);
@@ -105,3 +108,58 @@ void Gui::renderBar(int x, int y, int width, const char *name,
                 lineBegin=lineEnd+1;
             } while ( lineEnd );
   }
+
+  void Gui::renderMouseLook() {
+   if (!engine.map->isInFov(engine.mouse.cx, engine.mouse.cy)) {
+       // if mouse is out of fov, nothing to render
+       return;
+   }
+   char buf[128]={'\0'};
+
+
+   bool first=true;
+    for (Actor **it=engine.actors.begin(); it != engine.actors.end(); it++) {
+    Actor *actor=*it;
+    // find actors under the mouse cursor
+    if (actor->x == engine.mouse.cx && actor->y == engine.mouse.cy ) {
+        if (! first) {
+            strcat(buf,", ");
+        } else {
+            first=false;
+        }
+        strcat(buf,"\n");
+        strcat(buf,"\n");
+
+
+        strcat(buf,actor->name.c_str());
+        strcat(buf,"\n");
+
+
+/*        char result[50];
+        sprintf(result, "%f", actor->destructible->hp);
+        strcat(buf,"\nHP:");
+        strcat(buf,result);
+
+
+
+        char result2[50];
+        sprintf(result, "%f", actor->destructible->defense);
+        strcat(buf,"\nDefense:");
+        strcat(buf,result2);*/
+
+    }
+
+
+
+
+
+
+
+    }
+     // display the list of actors under the mouse cursor
+    con->setDefaultForeground(TCODColor::gold);
+    con->print(1,0,buf);
+
+  }
+
+

@@ -32,8 +32,8 @@ void Engine::update(){
   }
   //Siempre que pasamos por un nuevo update, pasamos a estar en idle.
   gameStatus = IDLE;
+  TCODSystem::checkForEvent(TCOD_EVENT_KEY_PRESS|TCOD_EVENT_MOUSE,&lastKey,&mouse);
 
-  TCODSystem::checkForEvent(TCOD_EVENT_KEY_PRESS,&lastKey,NULL);
   player->update(); //Aquí a veces se pasa al estado NEW_TURN (cuando se mueve)
 
   //Actualizar el resto de actores:

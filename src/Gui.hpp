@@ -5,6 +5,8 @@ public :
    ~Gui();
    void render();
    void message(const TCODColor &col, const char *text, ...);
+   void renderMouseLook();
+
 
 
 protected :
